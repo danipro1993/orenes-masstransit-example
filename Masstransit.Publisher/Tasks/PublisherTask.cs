@@ -36,7 +36,9 @@ namespace Masstransit.Publisher.Tasks
                 // This eShopOnContainers method is quering a database table 
                 // and publishing events into the Event Bus (RabbitMS / ServiceBus)
                 await _bus.Publish(new MessagePublisher($"Hola rabbitmq {new Random().Next(0, 1000)}!!!"));
-
+                
+                _logger.LogInformation($"Message published.");
+                
                 await Task.Delay(5000, stoppingToken);
             }
 
