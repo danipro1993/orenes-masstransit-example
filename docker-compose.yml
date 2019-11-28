@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  masstransit.publisher:
+    image: ${DOCKER_REGISTRY-}masstransitpublisher
+    build:
+      context: .
+      dockerfile: Masstransit.Publisher/Dockerfile
+    depends_on:
+      - rabbit
+    links:
+      - rabbit
+  masstransit.consumer:
+    image: ${DOCKER_REGISTRY-}masstransitconsumer
+    build:
+      context: .
+      dockerfile: Masstransit.Consumer/Dockerfile
+    depends_on:
+      - rabbit
+    links:
+      - rabbit
+  rabbit:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
