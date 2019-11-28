@@ -47,7 +47,7 @@ namespace Masstransit.Consumer
             {
                 x.AddBus(context => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
-                    var host = cfg.Host(new Uri("rabbitmq://localhost"), (configure) =>
+                    var host = cfg.Host(new Uri("rabbitmq://127.0.0.1"), (configure) =>
                     {
                         configure.Username("guest");
                         configure.Password("guest");

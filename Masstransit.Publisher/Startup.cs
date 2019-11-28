@@ -2,6 +2,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Masstransit.Publisher.HostedServices;
+using Masstransit.Publisher.Tasks;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +28,7 @@ namespace Masstransit.Publisher
         {
 
             services.AddHostedService<MassTransitService>();
+            services.AddHostedService<PublisherTask>();
 
             ContainerBuilder builder = new ContainerBuilder();
             builder.Populate(services);
@@ -44,7 +46,7 @@ namespace Masstransit.Publisher
             {
                 x.AddBus(context => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
-                    var host = cfg.Host(new Uri("rabbitmq://localhost"), (configure) =>
+                    var host = cfg.Host(new Uri("rabbitmq://127.0.0.1"), (configure) =>
                     {
                         configure.Username("guest");
                         configure.Password("guest");
